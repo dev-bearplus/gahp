@@ -545,6 +545,8 @@ const script = () => {
         'home-news-wrap': class extends TriggerSetup {
             constructor() {
                 super();
+                this.emblaApi = null;
+                this.dotButtons = null;
                 this.onTrigger = () => {
                     this.setup();
                     this.interact();
@@ -563,10 +565,21 @@ const script = () => {
                 }
             }
             initSlider() {
-                EmblaCarousel($(this).find('.home-news-cms').get(0));
+                const dotsNode = $(this).find('.home-news-slide-dots').get(0);
+                const dotNodeTemplate = $(this).find('.home-news-slide-dot').get(0);
+                this.emblaApi = EmblaCarousel($(this).find('.home-news-cms').get(0));
+
+                if (dotsNode && dotNodeTemplate) {
+                    this.dotButtons = new DotButtons(this.emblaApi, dotsNode, dotNodeTemplate);
+                }
             }
             destroy() {
                 super.destroy();
+                this.dotButtons?.destroy();
+                if (this.emblaApi) {
+                    this.emblaApi.destroy();
+                    this.emblaApi = null;
+                }
             }
         },
         'home-cta-wrap': class extends CTA {
