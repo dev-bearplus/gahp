@@ -77,6 +77,7 @@ class PrevNextButtons {
         this.emblaApi = emblaApi
         this.prevBtn = prevBtn
         this.nextBtn = nextBtn
+        this.autoplay = this.emblaApi.plugins()?.autoplay;
         this.scrollPrevHandler = () => this.scrollPrev()
         this.scrollNextHandler = () => this.scrollNext()
         this.toggleStateHandler = () => this.updateButtonState()
@@ -99,10 +100,14 @@ class PrevNextButtons {
 
     scrollPrev() {
         this.emblaApi.scrollPrev()
+        if (!this.autoplay) return;
+        this.autoplay.reset()
     }
 
     scrollNext() {
         this.emblaApi.scrollNext()
+        if (!this.autoplay) return;
+        this.autoplay.reset()
     }
 
     init() {
@@ -131,6 +136,7 @@ class DotButtons {
         this.dotNodeTemplate = dotNodeTemplate
         this.dotNodes = []
         this.clickHandlers = []
+        this.autoplay = this.emblaApi.plugins()?.autoplay;
         this.addDotBtnsHandler = () => this.addDotBtnsWithClickHandlers()
         this.toggleActiveHandler = () => this.toggleDotBtnsActive()
         this.init()
@@ -138,6 +144,8 @@ class DotButtons {
 
     scrollTo(index) {
         this.emblaApi.scrollTo(index)
+        if (!this.autoplay) return;
+        this.autoplay.reset()
     }
 
     addDotBtnsWithClickHandlers() {

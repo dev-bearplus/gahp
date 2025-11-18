@@ -396,7 +396,7 @@ const script = () => {
 
                 if (!slidesInner) return;
 
-                this.emblaApi = EmblaCarousel(slidesInner, { duration: 30 });
+                this.emblaApi = EmblaCarousel(slidesInner, { loop: true, duration: 35 }, [ EmblaCarouselAutoplay({ delay: 3000 }) ])
                 this.tweenParallax = new TweenParallax(this.emblaApi);
 
                 if (prevBtn && nextBtn) {
