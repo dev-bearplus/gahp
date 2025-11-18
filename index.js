@@ -25,12 +25,12 @@ const script = () => {
         return result;
     }
     const viewport = {
-		get w() {
-			return window.innerWidth;
-		},
-		get h() {
-			return window.innerHeight;
-		},
+        get w() {
+            return window.innerWidth;
+        },
+        get h() {
+            return window.innerHeight;
+        },
     }
     const device = { desktop: 991, tablet: 767, mobile: 479 }
     const debounce = (func, timeout = 300) => {
@@ -45,15 +45,15 @@ const script = () => {
         if (!el) return;
         const rect = el.getBoundingClientRect();
         if (orientation == 'horizontal') {
-                return (
-                    rect.left <= (window.innerWidth) &&
-                    rect.right >= 0
-                );
+            return (
+                rect.left <= (window.innerWidth) &&
+                rect.right >= 0
+            );
         } else {
-                return (
-                    rect.top <= (window.innerHeight) &&
-                    rect.bottom >= 0
-                );
+            return (
+                rect.top <= (window.innerHeight) &&
+                rect.bottom >= 0
+            );
         }
     }
     const refreshOnBreakpoint = () => {
@@ -218,115 +218,115 @@ const script = () => {
         }
     }
     class SmoothScroll {
-		constructor() {
-			this.lenis = null;
-			this.scroller = {
-				scrollX: window.scrollX,
-				scrollY: window.scrollY,
-				velocity: 0,
-				direction: 0,
-			};
-			this.lastScroller = {
-				scrollX: window.scrollX,
-				scrollY: window.scrollY,
-				velocity: 0,
-				direction: 0,
-			};
-		}
+        constructor() {
+            this.lenis = null;
+            this.scroller = {
+                scrollX: window.scrollX,
+                scrollY: window.scrollY,
+                velocity: 0,
+                direction: 0,
+            };
+            this.lastScroller = {
+                scrollX: window.scrollX,
+                scrollY: window.scrollY,
+                velocity: 0,
+                direction: 0,
+            };
+        }
 
-		init() {
-			this.reInit();
+        init() {
+            this.reInit();
 
-			$.easing.lenisEase = function (t) {
-				return Math.min(1, 1.001 - Math.pow(2, -10 * t));
-			};
+            $.easing.lenisEase = function (t) {
+                return Math.min(1, 1.001 - Math.pow(2, -10 * t));
+            };
 
-			gsap.ticker.add((time) => {
-				if (this.lenis) {
-					this.lenis.raf(time * 1000);
-				}
-			});
-			gsap.ticker.lagSmoothing(0);
-		}
+            gsap.ticker.add((time) => {
+                if (this.lenis) {
+                    this.lenis.raf(time * 1000);
+                }
+            });
+            gsap.ticker.lagSmoothing(0);
+        }
 
-		reInit() {
-			if (this.lenis) {
-				this.lenis.destroy();
-			}
-			this.lenis = new Lenis();
-			this.lenis.on("scroll", (e) => {
-				this.updateOnScroll(e);
-				ScrollTrigger.update();
-			});
-		}
-		reachedThreshold(threshold) {
-			if (!threshold) return false;
-			const dist = distance(
-				this.scroller.scrollX,
-				this.scroller.scrollY,
-				this.lastScroller.scrollX,
-				this.lastScroller.scrollY
-			);
+        reInit() {
+            if (this.lenis) {
+                this.lenis.destroy();
+            }
+            this.lenis = new Lenis();
+            this.lenis.on("scroll", (e) => {
+                this.updateOnScroll(e);
+                ScrollTrigger.update();
+            });
+        }
+        reachedThreshold(threshold) {
+            if (!threshold) return false;
+            const dist = distance(
+                this.scroller.scrollX,
+                this.scroller.scrollY,
+                this.lastScroller.scrollX,
+                this.lastScroller.scrollY
+            );
 
-			if (dist > threshold) {
-				this.lastScroller = { ...this.scroller };
-				return true;
-			}
-			return false;
-		}
+            if (dist > threshold) {
+                this.lastScroller = { ...this.scroller };
+                return true;
+            }
+            return false;
+        }
 
-		updateOnScroll(e) {
-			this.scroller.scrollX = e.scroll;
-			this.scroller.scrollY = e.scroll;
-			this.scroller.velocity = e.velocity;
+        updateOnScroll(e) {
+            this.scroller.scrollX = e.scroll;
+            this.scroller.scrollY = e.scroll;
+            this.scroller.velocity = e.velocity;
             this.scroller.direction = e.direction;
 
             if (header) {
                 header.updateOnScroll(smoothScroll.lenis);
             };
-		}
+        }
 
-		start() {
-			if (this.lenis) {
-				this.lenis.start();
-			}
-			$(".body").css("overflow", "initial");
-		}
+        start() {
+            if (this.lenis) {
+                this.lenis.start();
+            }
+            $(".body").css("overflow", "initial");
+        }
 
-		stop() {
-			if (this.lenis) {
-				this.lenis.stop();
-			}
-			$(".body").css("overflow", "hidden");
-		}
+        stop() {
+            if (this.lenis) {
+                this.lenis.stop();
+            }
+            $(".body").css("overflow", "hidden");
+        }
 
-		scrollTo(target, options = {}) {
-			if (this.lenis) {
-				this.lenis.scrollTo(target, options);
-			}
-		}
+        scrollTo(target, options = {}) {
+            if (this.lenis) {
+                this.lenis.scrollTo(target, options);
+            }
+        }
 
-		scrollToTop(options = {}) {
+        scrollToTop(options = {}) {
             if (this.lenis) {
                 this.lenis.scrollTo("top", { duration: .0001, immediate: true, lock: true, ...options });
             }
-		}
+        }
 
-		destroy() {
-			if (this.lenis) {
-				gsap.ticker.remove((time) => {
-					this.lenis.raf(time * 1000);
-				});
-				this.lenis.destroy();
-				this.lenis = null;
-			}
-		}
+        destroy() {
+            if (this.lenis) {
+                gsap.ticker.remove((time) => {
+                    this.lenis.raf(time * 1000);
+                });
+                this.lenis.destroy();
+                this.lenis = null;
+            }
+        }
     }
     class TriggerSetup extends HTMLElement {
         constructor() {
             super();
             this.tlTrigger = null;
-            this.onTrigger = () => {};
+            this.onTrigger = () => { };
         }
         connectedCallback() {
             this.tlTrigger = gsap.timeline({
@@ -349,7 +349,7 @@ const script = () => {
         }
     }
 
-	const smoothScroll = new SmoothScroll();
+    const smoothScroll = new SmoothScroll();
     smoothScroll.init();
 
     class Header {
@@ -465,7 +465,7 @@ const script = () => {
 
                 if (!slidesInner) return;
 
-                this.emblaApi = EmblaCarousel(slidesInner, { loop: true, duration: 35 }, [ EmblaCarouselAutoplay({ delay: 3000 }) ])
+                this.emblaApi = EmblaCarousel(slidesInner, { loop: true, duration: 35 }, [EmblaCarouselAutoplay({ delay: 3000 })])
                 this.tweenParallax = new TweenParallax(this.emblaApi);
 
                 if (prevBtn && nextBtn) {
@@ -537,6 +537,33 @@ const script = () => {
             }
             setup() {
                 // new ParallaxImage({ el: $(this).find('.home-accelerate-img-inner img').get(0) });
+            }
+            destroy() {
+                super.destroy();
+            }
+        },
+        'home-news-wrap': class extends TriggerSetup {
+            constructor() {
+                super();
+                this.onTrigger = () => {
+                    this.setup();
+                    this.interact();
+                }
+            }
+            setup() {
+                if (viewport.w < 767) {
+                    $(this).find('.home-news-cms').addClass('embla__viewport');
+                    $(this).find('.home-news-cms-list').addClass('embla__container');
+                    $(this).find('.home-news-cms-item').addClass('embla__slide');
+                }
+            }
+            interact() {
+                if (viewport.w < 767) {
+                    this.initSlider();
+                }
+            }
+            initSlider() {
+                EmblaCarousel($(this).find('.home-news-cms').get(0));
             }
             destroy() {
                 super.destroy();
