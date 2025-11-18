@@ -447,10 +447,14 @@ const script = () => {
                 $(this).find('.home-hero-slides-item-img').addClass('embla__parallax');
                 $(this).find('.home-hero-slides-item-img-inner').addClass('embla__parallax__layer');
                 $(this).find('.home-hero-slides-item-img-inner img').addClass('embla__parallax__img');
-                $('.home-hero-slides-item-img-inner img').each((_, img) => new ParallaxImage({ el: img }));
             }
             interact() {
                 this.initSlide();
+                $('.home-hero-slides-item-img-inner img').each((index, img) => {
+                    setTimeout(() => {
+                        new ParallaxImage({ el: img });
+                    }, index === 0 ? 4000 : 0);
+                });
             }
             initSlide() {
                 const slidesInner = $(this).find('.home-hero-slides-inner').get(0);
