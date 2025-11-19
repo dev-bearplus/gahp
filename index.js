@@ -510,7 +510,9 @@ const script = () => {
                 }
             }
             setup() {
-                new ParallaxImage({ el: $(this).find('.home-focus-img-inner img').get(0) });
+                if (viewport.w >= 991) {
+                    new ParallaxImage({ el: $(this).find('.home-focus-img-inner img').get(0) });
+                }
             }
             interact() {
                 const activeIdx = (idx) => {
