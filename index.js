@@ -522,6 +522,9 @@ const script = () => {
                 }
                 $(this).find('.home-focus-item-title').on('click', function (e) {
                     const idx = $(this).parent().index();
+                    if ($(e.currentTarget).parent().hasClass('active')) {
+                        return;
+                    }
                     activeIdx(idx);
                 });
                 activeIdx(0);
